@@ -14,7 +14,7 @@ const attendees = [
   'Michael Lord',
   'Thiruppathi Muthukumar'
 ];
-
+const comments = [];
 const topics = [
   {
     id: 1,
@@ -145,6 +145,17 @@ app.post('/topic/:id', function(req, res) {
   const topic = topics.find(topic => topic.id === id);
   topic.progress = progress;
   return res.json(topic);
+});
+
+app.post('/comments', function(req, res) {
+  const { day, comment } = req.body;
+  comments.push({ day, comment });
+  return res.json({ day, comment });
+});
+
+app.get('/comments', function(req, res) {
+  var day =req.query.day;
+  return res.json(comments.filter(comment => comment.day === day));
 });
 
 app.get('/attendees', function(req, res) {
